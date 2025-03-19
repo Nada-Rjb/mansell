@@ -1,0 +1,425 @@
+@view-transition {
+    navigation: auto;
+  }
+  
+  @layer reset {
+    /* Box sizing rules */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+  
+    /* Prevent font size inflation */
+    html {
+      -moz-text-size-adjust: none;
+      -webkit-text-size-adjust: none;
+      text-size-adjust: none;
+    }
+  
+    /* Remove default margin in favour of better control in authored CSS */
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    p,
+    figure,
+    blockquote,
+    dl,
+    dd {
+      margin: 0;
+    }
+  
+    /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+    [role="list"] {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    /* Set core body defaults */
+    body {
+      min-height: 100vh;
+      line-height: 1.6;
+      width: 100%;
+
+
+    }
+  html, body, #app {
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+    /* Set shorter line heights on headings and interactive elements */
+    h1,
+    h2,
+    h3,
+    h4,
+    button,
+    input,
+    label {
+      line-height: 1.1;
+    }
+  
+    /* Balance text wrapping on headings */
+    h1,
+    h2,
+    h3,
+    h4 {
+      text-wrap: balance;
+    }
+    p,
+    li {
+      text-wrap: pretty;
+    }
+  
+    /* A elements that don't have a class get default styles */
+    a:not([class]) {
+      text-decoration-skip-ink: auto;
+      color: currentColor;
+    }
+  
+    /* Make images easier to work with */
+    img,
+    picture {
+      max-inline-size: 100%;
+      display: block;
+    }
+  
+    /* Inherit fonts for inputs and buttons */
+    input,
+    button,
+    textarea,
+    select {
+      font-family: inherit;
+      font-size: inherit;
+    }
+  
+    /* Make sure textareas without a rows attribute are not tiny */
+    textarea:not([rows]) {
+      min-height: 10em;
+    }
+  
+    /* Anything that has been anchored to should have extra scroll margin */
+    :target {
+      scroll-margin-block: 5ex;
+    }
+  }
+  @layer base {
+    :root {
+      --clr-white: #ffffff;
+      --clr-gray-100: #cdcdcd;
+      --clr-gray-200: #f5f5f5;
+      --clr-gray-300: #e0e0e0; /* Lighter gray */
+      --clr-gray-400: #b0b0b0; /* Medium gray */
+      --clr-gray-500: #808080; /* Standard gray */
+      --clr-gray-600: #505050; /* Darker gray */
+      --clr-gray-700: #303030; /* Even darker gray */
+      --clr-brand-400: #f7b687;
+      --clr-brand-500: #f59c5c;
+      --clr-green-300: #98d7b0;
+      --clr-green-400: #659577;
+      --clr-green-500: #3a8256;
+      --clr-green-600: #223f2e;
+      --clr-blue-400: #afc7e9;
+      --clr-blue-500: #9db9e6;
+      --clr-blue-600: #8aaddf;
+      --clr-blue-700: #7ba1d8;
+      --clr-blue-800: #6d97d2;
+      --clr-blue-900: #608bcb;
+      --clr-orange-500: #e67919;
+      --clr-red-500: #d22d2f;
+      --clr-teal-500: #37a2ae;
+      --clt-black: #000000;
+      /* //fonts */
+      --ff-heading: "Badeen Display", sans-serif;
+      --ff-body: "Cairo", sans-serif;
+      --ff-alt: "Roboto", sans-serif;
+      --ff-arabic: "Noto Kufi Arabic", sans-serif;
+      --fs-300: 0.875rem;
+      --fs-400: 1rem;
+      --fs-500: 1.125rem;
+      --fs-600: 1.25rem;
+      --fs-700: 1.5rem;
+      --fs-800: 2rem;
+      --fs-900: 3.75rem;
+      --fs-1000: 3.75rem;
+  
+      @media (min-width: 760px) {
+        --fs-300: 0.875rem;
+        --fs-400: 1rem;
+        --fs-500: 1.25rem;
+        --fs-600: 1.5rem;
+        --fs-700: 2rem;
+        --fs-800: 3rem;
+        --fs-900: 5rem;
+        --fs-1000: 7.5rem;
+      }
+    }
+    :root {
+      /* primitives here */
+      --text-main: var(--clr-gray-100);
+      --text-high-contrast: var(--clt-black);
+      --text-brand: var(--clr-brand-500);
+      --text-brand-light: var(--clr-brand-400);
+      --background-accent-more-light: var(--clr-green-300);
+      --background-accent-light: var(--clr-green-400);
+      --background-accent-main: var(--clr-green-500);
+      --background-accent-dark: var(--clr-green-600);
+      --gray-main: var(--clr-gray-300); /* Medium light gray */
+      --gray-dark: var(--clr-gray-400); /* Medium gray */
+      --gray-darker: var(--clr-gray-500); /* Standard gray */
+      --gray-more-dark: var(--clr-gray-600); /* Darker gray */
+  
+      --background-extra-light: var(--clr-blue-500);
+      --background-light: var(--clr-blue-600);
+      --background-main: var(--clr-blue-700);
+      --background-dark: var(--clr-blue-800);
+      --background-extra-dark: var(--clr-blue-900);
+      --background-white: var(--clr-white: #ffffff);
+      --back-ground-card: var(--clr-gray-200);
+    }
+    :root {
+      --font-size-heading-sm: var(--fs-700);
+      --font-size-heading-regular: var(--fs-800);
+      --font-size-heading-lg: var(--fs-900);
+      --font-size-heading-xl: var(--fs-1000);
+  
+      --font-size-sm: var(--fs-300);
+      --font-size-regular: var(--fs-400);
+      --font-size-md: var(--fs-500);
+      --font-size-lg: var(--fs-600);
+    }
+    :root {
+      --border-radius-1: 0.25rem;
+      --border-radius-2: 0.5rem;
+      --border-radius-3: 0.75rem;
+    }
+    html {
+      font-family: var(--ff-arabic);
+      line-height: 1.6;
+    }
+    /* he rule ensures that the animation behavior is applied only when the user has */
+    @media (prefers-reduced-motion: no-preference) {
+      html {
+        scroll-behavior: smooth;
+      }
+    }
+  
+    body {
+      font-size: var(--font-size-regular);
+      color: var(--gray-more-dark);
+      background-color: var(--background-white);
+      direction: rtl;
+      text-align: right;
+    }
+    h1,
+    h2,
+    h3,
+    h4 {
+      color: var(--text-high-contrast);
+    }
+    h1,
+    .primary-title {
+      font-size: var(--font-size-heading-lg);
+    }
+    a {
+      color: var(--clr-gray-200);
+    }
+    a:hover,
+    a:focus-visible {
+      color: #f59c5c;
+    }
+    img {
+      border-radius: var(--border-radius-3);
+    }
+  }
+  @layer layout {
+     .section {
+      --pading: 1rem;
+      padding-block: var(--pading);
+      @media (min-width: 760px) {
+        --pading: 1.5rem;
+        &[data-padding="compact"] {
+          --pading: 1.5rem;
+        }
+      }
+    }
+    .wrapper {
+      --wraper--max--width: 1130px;
+      --wrapper-padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+  
+      max-width: var(--wraper--max--width);
+      margin-inline: auto;
+      padding-inline: var(--wrapper-padding);
+      /*to make thw width the same */
+      box-sizing: content-box;
+  
+      &[data-width="wide"] {
+        --wrapper-max-width: 1330px;
+      }
+      &[data-width="narrow"] {
+        --wraper--max--width: 720px;
+      }
+    }
+  }
+  @layer components {
+    .site-footer {
+      display: flex;
+      background: var(--background-accent-dark);
+      text-align: center;
+      padding-block: 2rem;
+      gap: 2rem;
+      justify-content: center;
+      align-items: center;
+      color: var(--text-main);
+  
+      a {
+        color: var(--clr-gray-200);
+        text-decoration: none;
+      }
+      a:hover,
+      a:focus-visible {
+        color: var(--text-brand);
+      }
+      ul li {
+        margin-block: 1rem;
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      ul li:nth-child(1),
+      ul li:nth-child(2) {
+        justify-content: center;
+      }
+    }
+  }
+  .site-footer--title {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+  }
+  
+  .hero {
+    text-align: center;
+    font-size: var(--font-size-md);
+    color: var(--background-accent-dark);
+    background-size: cover;
+    background-position: center;
+  }
+  .hero--title {
+    font-size: var(--font-size-heading-lg);
+    color: var(--clr-white);
+  
+    span {
+      font-size: var(--font-size-heading-xl);
+      color: var(--clr-brand-500);
+      display: block;
+    }
+  }
+  
+  /*for second page prouduct guide and use custom componant from card in page one*/
+  
+  
+  
+  @layer utilities {
+    [hidden] {
+      display: none !important;
+    }
+  
+    .resizing * {
+      transition: none;
+      /*if i have animation pause when resize */
+      animation-play-state: paused;
+    }
+    .visually-hidden {
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
+    }
+    .text-center {
+      text-align: center;
+    }
+    /* primitives here */
+    .text-main {
+      color: var(--text-main);
+    }
+    .text-high-contrast {
+      color: var(--text-high-contrast);
+    }
+    .text-high-contrast {
+      color: var(--text-high-contrast);
+    }
+    .text-brand {
+      color: var(--text-brand);
+    }
+    .text-brand-light {
+      color: var(--text-brand-light);
+    }
+    .section-title {
+      font-size: var(--font-size-heading-regular);
+    }
+  
+    .background-accent-light {
+      background-color: var(--background-white);
+    }
+    .background-accent-main {
+      background-color: var(--background-white);
+    }
+    .background-accent-dark {
+      background-color: var(--background-accent-dark);
+    }
+    .background-extra-light {
+      background-color: var(--background-extra-light);
+    }
+    .background-extra-light {
+      background-color: var(--background-extra-light);
+    }
+  
+    .background-gray {
+      background-color: var(--gray-main);
+    }
+    .back-ground-card {
+      background-color: var(--back-ground-card);
+    }
+    .background-dark {
+      background-color: var(--background-dark);
+    }
+    .background-extra-dark {
+      background-color: var(--clr-gray-200);
+    }
+  
+    .background-accent {
+      background-color: var(--background-accent-dark);
+    }
+  
+    .font-size-sm {
+      font-size: var(--font-size-sm);
+    }
+    .font-size-regular {
+      font-size: var(--font-size-regular);
+    }
+    .font-size-md {
+      font-size: var(--font-size-md);
+    }
+    .font-size-lg {
+      font-size: var(--font-size-lg);
+    }
+  }
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }

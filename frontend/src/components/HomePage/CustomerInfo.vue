@@ -1,0 +1,111 @@
+<template>
+    <section class="hero flow section" data-padding="compact">
+      <div class="wrapper" id="main">
+        <div :class="{'customer-img-wrapper' : isdefaultImage, 'no-bg' : !isdefaultImage} " >
+        <img :class="{'default-img' : isdefaultImage}" class="customer-img" :src="customerImage || defaultImage" alt="Customer Image" @error="useDefaultImage" />
+        </div>
+        <div class="infomatin">
+          <div>
+            <h3>اسم العميل</h3>
+          </div>
+          <div class="info">
+            <p>مسار الحركه</p>
+          <img class="map-icon" :src="mapImage" alt="Map" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </template>
+  
+  <script>
+  export default {
+    data() {
+     return {
+      customerImage: new URL("@/assets/imges/shop.png", import.meta.url).href, 
+      defaultImage: new URL("@/assets/imges/shop.png", import.meta.url).href, // Correct way to import image
+      mapImage: new URL("@/assets/imges/map.png", import.meta.url).href, // Ensure map image loads properly
+      isdefaultImage :false,
+    };
+    },
+    computed: {
+      isdefaultImage () {
+        return !this.customerImage;
+      }
+    },
+    methods: {
+      useDefaultImage (event) {
+        event.target.src = this.defaultImage
+        this.isdefaultImage = true
+      }
+    }
+  };
+  </script>
+  
+  <style lang="scss" scoped>
+  .section {
+    --pading: 0.1rem;
+    padding-block: var(--pading);
+  }
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .customer-img-wrapper {
+    width: 90%;
+    height: 15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eee;
+    border-radius: 10px;
+    .no-bg{
+        background-color: transparent !important;
+
+    }
+    
+  }
+  .default-img {
+    
+  width: 106px ;
+  height: 106px ;
+}
+.customer-img {
+  width: 20rem;
+  aspect-ratio: 1/1;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+  .infomatin {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    padding: 0.5rem;
+  }
+  .hero {
+    align-items: center;
+    text-align: start;
+  }
+  
+  .info {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+    p {
+      color: #757575;
+    }
+  }
+  
+  .map-icon {
+    width: 50px;
+    height: 50px;
+    align-self: center; /* Keep it aligned */
+  }
+  </style>
