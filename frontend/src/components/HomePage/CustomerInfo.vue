@@ -2,8 +2,13 @@
     <section class="hero flow section" data-padding="compact">
       <div class="wrapper" id="main">
         <div :class="{'customer-img-wrapper' : isdefaultImage, 'no-bg' : !isdefaultImage} " >
-        <img :class="{'default-img' : isdefaultImage}" class="customer-img" :src="customerImage || defaultImage" alt="Customer Image" @error="useDefaultImage" />
+         <input  ref="inputimage" v-if="isdefaultImage"  type="file"  @change="uploadImage" capture="environment" accept="image/*" class="upload-btn hidden cursor"/>
+        <img :class="{'default-img' : isdefaultImage , 'cursor-pointer' : isdefaultImage} " class="customer-img" :src="customerImage || defaultImage" 
+            alt="Customer Image" 
+            @error="useDefaultImage"
+            @click="openFileSelector" />
         </div>
+            <!-- Upload Button (Only Shown if Default Image is Active) -->
         <div class="infomatin">
           <div>
             <h3>اسم العميل</h3>
@@ -21,10 +26,9 @@
   export default {
     data() {
      return {
-      customerImage: new URL("@/assets/imges/shop.png", import.meta.url).href, 
+      customerImage:"",
       defaultImage: new URL("@/assets/imges/shop.png", import.meta.url).href, // Correct way to import image
       mapImage: new URL("@/assets/imges/map.png", import.meta.url).href, // Ensure map image loads properly
-      isdefaultImage :false,
     };
     },
     computed: {
@@ -33,10 +37,24 @@
       }
     },
     methods: {
+      //at error in customer image 
       useDefaultImage (event) {
         event.target.src = this.defaultImage
         this.isdefaultImage = true
-      }
+      },
+      uploadImage(event) {
+        //upload one image 
+        const file = event.target.files[0]
+        if (file) {
+        console.log("File selected:", file.name, file.size, file.type); // Debugging output
+        this.customerImage = URL.createObjectURL(file)
+        }},
+        
+        openFileSelector () {
+          this.$refs.inputimage.click();
+        },
+
+      
     }
   };
   </script>
@@ -68,9 +86,8 @@
     
   }
   .default-img {
-    
-  width: 106px ;
-  height: 106px ;
+  width: 106px !important;
+  height: 106px !important;
 }
 .customer-img {
   width: 20rem;
@@ -85,6 +102,7 @@
     flex-direction: column;
     width: 90%;
     padding: 0.5rem;
+    gap: 0.1rem;
   }
   .hero {
     align-items: center;
@@ -108,4 +126,8 @@
     height: 50px;
     align-self: center; /* Keep it aligned */
   }
+  .cursor-pointer {
+  cursor: pointer;
+}
+  
   </style>
