@@ -14,13 +14,13 @@
               area-expanded="false"
               :class="{ 'menu-active': menuOpen }"
               @click="toggleMenu"
-              style="width: 40px; height: 40px"
+              style="width: 30px; height: 30px"
             >
               <span class="visually-hidden">Menue</span>
               <img
                 src="../../assets/imges/hamburger.svg"
                 alt="menue"
-                style="width: 40px; height: 40px"
+                style="width: 20px; height: 20px; margin-right: 5px;"
               />
             </button>
             <nav

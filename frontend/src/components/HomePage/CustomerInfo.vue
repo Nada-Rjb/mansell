@@ -2,20 +2,20 @@
     <section class="hero flow section" data-padding="compact">
       <div class="wrapper" id="main">
         <div :class="{'customer-img-wrapper' : isdefaultImage, 'no-bg' : !isdefaultImage} " >
-         <input  ref="inputimage" v-if="isdefaultImage"  type="file"  @change="uploadImage" capture="environment" accept="image/*" class="upload-btn hidden cursor"/>
-        <img :class="{'default-img' : isdefaultImage , 'cursor-pointer' : isdefaultImage} " class="customer-img" :src="customerImage || defaultImage" 
-            alt="Customer Image" 
-            @error="useDefaultImage"
-            @click="openFileSelector" />
+          <input  ref="inputimage" v-if="isdefaultImage"  type="file"  @change="uploadImage" capture="environment" accept="image/*" class="upload-btn hidden cursor"/>
+          <img :class="{'default-img' : isdefaultImage , 'cursor-pointer' : isdefaultImage} " class="customer-img" :src="customerImage || defaultImage" 
+          alt="Customer Image" 
+          @error="useDefaultImage"
+          @click="openFileSelector" />
         </div>
             <!-- Upload Button (Only Shown if Default Image is Active) -->
-        <div class="infomatin">
-          <div>
-            <h3>اسم العميل</h3>
-          </div>
-          <div class="info">
-            <p>مسار الحركه : {{ locationText }} </p>
-          <img class="map-icon cursor-pointer" :src="mapImage" alt="Map" @click = "getLocation"/>
+            <div class="infomatin">
+              <div>
+                <h3>اسم العميل</h3>
+              </div>
+              <div class="info">
+                <p>مسار الحركه : {{ locationText }} </p>
+                <img class="map-icon cursor-pointer" :src="mapImage" alt="Map" @click = "getLocation"/>
           </div>
         </div>
       </div>
@@ -23,11 +23,12 @@
   </template>
   
   <script>
+  import {FileUploader} from "frappe-ui";
   export default {
     data() {
      return {
       customerImage:"",
-      successMapIcon: new URL("@/assets/imges/correct.jpg", import.meta.url).href, // Success icon
+      successMapIcon: new URL("@/assets/imges/correctsign.svg", import.meta.url).href, // Success icon
       defaultImage: new URL("@/assets/imges/shop.png", import.meta.url).href, // Correct way to import image
       mapImage: new URL("@/assets/imges/map.png", import.meta.url).href, // Ensure map image loads properly
       location : null,
@@ -62,11 +63,14 @@
         getLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
+              // Success Callback
+
           (position) => {
             this.location = {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
+            //which converts the coordinates into a human-readable address.
            this.getAddress(this.location.lat, this.location.lng);
             this.mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${this.location.lat},${this.location.lng}&zoom=15&size=300x200&markers=color:red%7C${this.location.lat},${this.location.lng}&key=YOUR_GOOGLE_MAPS_API_KEY`;
             this.mapImage = this.successMapIcon;
@@ -75,10 +79,9 @@
             console.log("User Location:", this.location);
           },
           (error) => {
-            this.error = "فشل في الحصول على الموقع: " + error.message;
+             this.error = "فشل في الحصول على الموقع: " + error.message;
              this.locationText = "";
-
-            this.mapImage = this.defaultImage;
+             this.mapImage = this.defaultImage;
 
           }
         );
@@ -90,7 +93,7 @@
     },
   
   async getAddress (latitud,longitude) {
-     const apiUrl = `https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitude}&format=json`;
+     const apiUrl = `https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitude}&format=json&accept-language=ar`;
      try {
       const response = await fetch (apiUrl);
       const data = await response.json();

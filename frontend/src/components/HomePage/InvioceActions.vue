@@ -2,10 +2,10 @@
   <section class="flow section" data-padding="compact">
     <div class="wrapper" id="main">
       <div class="invoice-actions">
-        <button class="show-invoices" @click="() => openQuickview($event)"> <img src="../../assets/imges/Trello.png" alt="Upload" class="icon bg-transparent" />
+        <button class="show-invoices" @click="() => openQuickview($event)"> <img src="../../assets/imges/Trello.svg" alt="Upload" class="icon bg-transparent" />
   <p> رفع الفاتورة</p> </button>
 <button class="upload-invoice" >
-  <img src="../../assets/imges/Iconupload.png" alt="Upload" class="icon bg-transparent" />
+  <img src="../../assets/imges/Iconupload.svg" alt="Upload" class="icon bg-transparent" />
   <p> رفع الفاتورة</p>
 </button>
 
