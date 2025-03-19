@@ -14,8 +14,8 @@
             <h3>اسم العميل</h3>
           </div>
           <div class="info">
-            <p>مسار الحركه</p>
-          <img class="map-icon" :src="mapImage" alt="Map" />
+            <p>مسار الحركه : {{ locationText }} </p>
+          <img class="map-icon cursor-pointer" :src="mapImage" alt="Map" @click = "getLocation"/>
           </div>
         </div>
       </div>
@@ -27,8 +27,13 @@
     data() {
      return {
       customerImage:"",
+      successMapIcon: new URL("@/assets/imges/correct.jpg", import.meta.url).href, // Success icon
       defaultImage: new URL("@/assets/imges/shop.png", import.meta.url).href, // Correct way to import image
       mapImage: new URL("@/assets/imges/map.png", import.meta.url).href, // Ensure map image loads properly
+      location : null,
+      error: null,
+      locationText: "اضغط على الخريطة للحصول على موقعك",
+
     };
     },
     computed: {
@@ -54,9 +59,56 @@
           this.$refs.inputimage.click();
         },
 
-      
-    }
-  };
+        getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.location = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+           this.getAddress(this.location.lat, this.location.lng);
+            this.mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${this.location.lat},${this.location.lng}&zoom=15&size=300x200&markers=color:red%7C${this.location.lat},${this.location.lng}&key=YOUR_GOOGLE_MAPS_API_KEY`;
+            this.mapImage = this.successMapIcon;
+
+
+            console.log("User Location:", this.location);
+          },
+          (error) => {
+            this.error = "فشل في الحصول على الموقع: " + error.message;
+             this.locationText = "";
+
+            this.mapImage = this.defaultImage;
+
+          }
+        );
+      } else {
+        this.error = "الموقع غير مدعوم في هذا المتصفح.";
+        this.mapImage = this.defaultImage;
+
+      }
+    },
+  
+  async getAddress (latitud,longitude) {
+     const apiUrl = `https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitude}&format=json`;
+     try {
+      const response = await fetch (apiUrl);
+      const data = await response.json();
+      if (data.display_name) {
+      this.locationText = `📍 ${data.display_name}`;
+      }
+      else {
+                  this.error = "لم يتم العثور على عنوان لهذا الموقع.";
+
+      }
+         }catch (error) {
+        this.error = "حدث خطأ أثناء جلب العنوان.";
+
+  
+      }
+    }}
+  }
+
   </script>
   
   <style lang="scss" scoped>
