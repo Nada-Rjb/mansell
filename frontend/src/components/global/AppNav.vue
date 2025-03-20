@@ -29,8 +29,8 @@
               v-show="!isMobile || menuOpen"
             >
               <ul role="list">
-                <li><a href="/">استعلام</a></li>
-                <li><a href="/">تفاصيل المسار</a></li>
+                <li @click="$router.push('/' ),toggleMenu()">استعلام</li> 
+                <li @click="$router.push('/account/LaneDetails')">تفاصيل المسار</li>
                 <li><a href="/">تفاصيل الموظف</a></li>
                 <li v-if="!isMobile">
                   <a href="/" class="logout">تسجيل الخروج</a>

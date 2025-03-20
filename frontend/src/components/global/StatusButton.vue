@@ -38,6 +38,7 @@
     }
   };
   </script>
+
   <style lang="scss" scoped>
  .status-button {
   width: 30%;
