@@ -32,12 +32,10 @@
               class="primary-nav"
               v-show="!isMobile || menuOpen"
             >
-
               <ul role="list">
                 <li @click="$router.push('/' ),toggleMenu()">استعلام</li> 
                 <li @click="$router.push('/account/LaneDetails'),toggleMenu()">تفاصيل المسار</li>
-                <li><a href="/">تفاصيل الموظف</a></li>
-                <li v-if="!isMobile">
+                <li @click="$router.push('/account/EmployeeDetails'),toggleMenu()">تفاصيل الموظف</li>                <li v-if="!isMobile">
                   <a href="/" class="logout">تسجيل الخروج</a>
                 </li>
               </ul>
@@ -240,6 +238,8 @@
     currentPage() {
       if (this.currentRoute === "/") return "استعلام";  // Home
       if (this.currentRoute === "/account/LaneDetails") return "تفاصيل المسار"; // LAN
+      if (this.currentRoute === "/account/EmployeeDetails") return "تفاصيل الموظف"; // LAN
+
     },
   },
   }
