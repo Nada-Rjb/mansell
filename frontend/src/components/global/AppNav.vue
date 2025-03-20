@@ -9,6 +9,8 @@
               alt="El Fateh"
               style="max-inline-size: 60px"
             />
+            <a href="/" class="logout"  v-if="isMobile">{{currentPage}}</a>
+
             <button
               area-control="primary-navigation"
               area-expanded="false"
@@ -23,11 +25,14 @@
                 style="width: 20px; height: 20px; margin-right: 5px;"
               />
             </button>
+
+
             <nav
               id="primary-navigation"
               class="primary-nav"
               v-show="!isMobile || menuOpen"
             >
+
               <ul role="list">
                 <li @click="$router.push('/' ),toggleMenu()">استعلام</li> 
                 <li @click="$router.push('/account/LaneDetails')">تفاصيل المسار</li>
@@ -40,6 +45,7 @@
                 <li><a href="/" class="logout">تسجيل الخروج</a></li>
               </div>
             </nav>
+
           </div>
         </div>
       </header>
@@ -204,6 +210,7 @@
       return {
         menuOpen: false, // Default: Menu is closed
         isMobile: window.innerWidth < 760, // Check initial screen size
+        currentRoute: this.$route.path,
       };
     },
     mounted() {
@@ -229,5 +236,11 @@
         }
       },
     },
-  };
+    computed: {
+    currentPage() {
+      if (this.currentRoute === "/") return "استعلام";  // Home
+      if (this.currentRoute === "/account/LaneDetails") return "تفاصيل المسار"; // LAN
+    },
+  },
+  }
   </script>
