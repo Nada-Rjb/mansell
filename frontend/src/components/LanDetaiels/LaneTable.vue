@@ -10,32 +10,32 @@
                     <th>Payment</th>
                     <th>Pass by</th>             
                 </tr>
-                <tr>
-                    <td>succed</td>
-                    <td>failed</td>
-                    <td>succed</td>
-                    <td>succed</td>
-                </tr>
-                   <tr>
-                    <td>succed</td>
-                    <td>failed</td>
-                    <td>succed</td>
-                    <td>succed</td>
-                </tr>
-                   <tr>
-                    <td>succed</td>
-                    <td>failed</td>
-                    <td>succed</td>
-                    <td>succed</td>
-                </tr>
+                <tr v-for="(row,rowIndex) in tableData" :key="rowIndex"
+                >
+                    <td v-for="(cell,cellIndex) in row" :key="cellIndex" :class= "{'success' : cell === 'succeeded' , 'failed' : cell === 'failed'}">
+                        <img v-if="cell === 'succeeded'"  src="../../assets/imges/correctsign.svg" alt="succeeded" class="status-icon">
+                       <img v-if="cell === 'failed'" src="../../assets/imges/Wrongsign.svg" alt="failed" class="status-icon">
+                      
+                    </td>
 
-
+                </tr>
             </table>
         </div>
       </div>
     </section>
   </template>
-  
+  <script>
+  export default {
+    data() {
+        return {
+        tableData: [
+        ["succeeded", "failed", "succeeded", "succeeded"],
+        ["succeeded", "failed", "succeeded", "succeeded"],
+        ["succeeded", "failed", "succeeded", "succeeded"],
+      ],} 
+    }   
+    }
+</script>
   <style scoped>
   table {
   border-collapse: collapse;
@@ -56,8 +56,15 @@ th:last-child, td:last-child {
 th:first-child, td:first-child {
   border-right: none ;
 }
+.success {
+  background-color: lightgreen;
+}
 
-
-
+.failed {
+  background-color: lightcoral;
+}
+.status-icon {
+    margin: auto;
+}
 
   </style>
