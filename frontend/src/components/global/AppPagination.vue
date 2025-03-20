@@ -2,8 +2,7 @@
   <div class="pagination">
     <!-- when click go to prev page & at page one disaple button  -->
     <button @click="prevPage" :disabled="currentPage === 1" class="bold">
-      &lt;
-    </button>
+    <img src="../../assets/imges/PaginationNext.svg" alt="PaginationNext.svg">    </button>
     <!-- First Page -->
     <button
       v-if="totalPages > 1"
@@ -40,7 +39,7 @@
       :disabled="currentPage === totalPages"
       class="bold"
     >
-      &gt;
+    <img src="../../assets/imges/PaginationPrevious.svg" alt="PaginationNext.svg">   
     </button>
   </div>
 </template>
@@ -77,7 +76,6 @@ export default {
     //make page in child = page in parent set value in child
     changePage(page) {
       if (page !== this.currentPage) {
-        // Emit an event to update the parent
         this.$emit("update:modelValue", page);
 
         // Smoothly scroll to the section title
@@ -102,8 +100,8 @@ export default {
     //create array for number of page
     numberPages() {
       let pages = [];
-      let startPage = Math.max(2, this.currentPage - 1);
-      let endPage = Math.min(this.totalPages - 1, this.currentPage + 1);
+      let startPage = Math.max(2, this.currentPage );
+      let endPage = Math.min(this.totalPages, this.currentPage + 1);
       for (let i = startPage; i <= endPage; i++) {
         pages.push(i);
       }
@@ -118,16 +116,19 @@ export default {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  margin-top: 1rem;
 }
 button {
-  padding: 8px 12px;
+  width: 32px;
+  height: 32px;
   background: white;
+  color: #1E1E1E;
   cursor: pointer;
   border-radius: 5px;
   border: none;
 }
 button.active {
-  background: rgb(1, 97, 38);
+  background:#2C2C2C;
   color: white;
   border: 1px solid green;
   font-size: 20px;
