@@ -9,7 +9,7 @@
               alt="El Fateh"
               style="max-inline-size: 60px"
             />
-            <a href="/" class="logout"  v-if="isMobile">{{currentPage}}</a>
+          <h3 class="logout text-2xl font-bold" v-if="isMobile && !menuOpen" >{{currentPage}}</h3>
 
             <button
               area-control="primary-navigation"
@@ -35,7 +35,7 @@
 
               <ul role="list">
                 <li @click="$router.push('/' ),toggleMenu()">استعلام</li> 
-                <li @click="$router.push('/account/LaneDetails')">تفاصيل المسار</li>
+                <li @click="$router.push('/account/LaneDetails'),toggleMenu()">تفاصيل المسار</li>
                 <li><a href="/">تفاصيل الموظف</a></li>
                 <li v-if="!isMobile">
                   <a href="/" class="logout">تسجيل الخروج</a>
