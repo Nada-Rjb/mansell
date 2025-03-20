@@ -2,11 +2,11 @@
     <section class="hero flow section" data-padding="compact">
       <div class="wrapper" id="main">
         <div class="transaction-buttons">
-          <button :class="['status-button', status]">
+          <button :class="['status-button', status]" @click="toggleImage">
             <span class="lable">{{ label }}</span>
             <span :class="['status-icon', status]">
-              <span v-if="status === 'success'"><img src="../../assets/imges/correctsign.svg" alt=""></span>
-              <span v-else-if="status === 'error'"><img src="../../assets/imges/Wrongsign.svg" alt=""></span>
+              <span v-if="status === 'success'"> <img  v-if="isClicked" src="../../assets/imges/correctsign.svg"alt=""> </span>
+              <span v-else-if="status === 'error'"><img v-if="isClicked" src="../../assets/imges/Wrongsign.svg" alt=""></span>
             </span>
           </button>
         </div>
@@ -15,6 +15,11 @@
   </template>
   <script>
   export default {
+    data(){
+      return {
+        isClicked: false,
+      }
+    },
     props: {
       label: {
         type: String,
@@ -26,6 +31,11 @@
         default: "success",
       },
     },
+    methods:{
+      toggleImage() {
+        this.isClicked = !this.isClicked
+      }
+    }
   };
   </script>
   <style lang="scss" scoped>
