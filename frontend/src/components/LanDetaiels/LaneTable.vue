@@ -14,8 +14,8 @@
                 <tr v-for="(row,rowIndex) in tableData" :key="rowIndex"
                 >
                     <td v-for="(cell,cellIndex) in row" :key="cellIndex" :class= "{'success' : cell === 'succeeded' , 'failed' : cell === 'failed'}">
-                        <img v-if="cell === 'succeeded'"  src="../../assets/imges/correctsign.svg" alt="succeeded" class="status-icon">
-                       <img v-if="cell === 'failed'" src="../../assets/imges/Wrongsign.svg" alt="failed" class="status-icon">
+                        <button v-if="cell === 'succeeded'"   class="status-icon" ></button>
+                       <button v-if="cell === 'failed'"   class="status-icon" @click = "changebaggroundcolor"></button>
                       
                     </td>
 
@@ -30,9 +30,9 @@
     data() {
         return {
         tableData: [
-        ["succeeded", "failed", "succeeded", "succeeded"],
-        ["succeeded", "failed", "succeeded", "succeeded"],
-        ["succeeded", "failed", "succeeded", "succeeded"],
+        ["", "failed", "succeeded", "succeeded"],
+        ["", "failed", "succeeded", "succeeded"],
+        ["", "failed", "succeeded", "succeeded"],
       ],} 
     }   
     }
@@ -57,13 +57,13 @@ th:last-child, td:last-child {
 th:first-child, td:first-child {
   border-right: none ;
 }
-/* .success {
+ .success {
   background-color: lightgreen;
 }
 
 .failed {
   background-color: lightcoral;
-} */
+} 
 .status-icon {
     margin: auto;
     width: 50px;
