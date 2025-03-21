@@ -20,7 +20,7 @@ section {
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    gap: 2rem;
+    gap: 3rem;
     padding-bottom: 1rem;
     border-bottom: 2px  #D9D9D9 solid;
     font-weight: bold;

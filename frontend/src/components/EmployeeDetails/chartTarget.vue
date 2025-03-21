@@ -32,10 +32,10 @@ export default {
   components: { DoughnutChart },
   setup() {
         //target /////////////////
-    const firstValue = ref(300);
+    const firstValue = ref(3000);
     ///////target for employee 
-    const secondValue = ref(200);
-    const percentage = computed(() => ((( firstValue.value-secondValue.value ) / 100)*100).toFixed(1) );
+    const secondValue = ref(100);
+    const percentage = computed(() => ((( secondValue.value/firstValue.value ) * 100)).toFixed(1)  + '%');
 
     const testData = ref({
       labels: ['target', 'Remaining'],
@@ -51,41 +51,68 @@ export default {
 
 // Custom Plugin to Draw Text in the Center
 
+const currency = " EGP"; // Define currency globally
+
 const centerTextPlugin = {
   id: 'centerText',
   afterDraw(chart) {
     const { width, height, ctx } = chart;
     if (!ctx) return;
-    
+
     ctx.save();
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    const lineSpacing = 25; // Adjust spacing between lines
+    const lineSpacing = 25; // Space between text lines
 
-    // 🌟 First Line (Big Number + Small "EGP")
+    // 🌟 First Text (Smaller)
     ctx.font = 'bold 22px Arial';
     ctx.fillStyle = '#02542D';
-    ctx.fillText(`${secondValue.value}`, width / 2 - 15, height / 2 - lineSpacing * 1.5);
+    ctx.fillText(secondValue.value, width / 2, height / 2 - lineSpacing * 1.5);
 
-    ctx.font = 'bold 10px Arial'; // Smaller "EGP"
-    ctx.fillText('EGP', width / 2+ 40, height / 2-lineSpacing * 1.5);
+    ctx.font = 'bold 10px Arial';
+    const currencyWidth = ctx.measureText(currency).width;
+    const secondTextWidth = ctx.measureText(secondValue.value).width;
+    
+ctx.fillText(currency, width / 2 + secondTextWidth / 2 + 22, height / 2 - lineSpacing * 1.2);
 
-    // 🌟 Second Line (Big Number + Small "EGP")
-    ctx.font = 'bold 24px Arial';
+
+    // ✨ Measure First Text Width
+    ctx.font = 'bold 24px Arial'; // Ensure same font size as first text
+    const firstTextWidth = ctx.measureText(firstValue.value).width;
+    const totalTextWidth = firstTextWidth + currencyWidth+4;
+
+    // ✨ Draw Line with Same Width as First Text
+    const lineStartX = (width / 2)+10 - totalTextWidth  / 2; // Start at text left
+    const lineEndX = width / 2 + totalTextWidth  / 2; // End at text right
+    const lineY = height / 2 - lineSpacing * 0.8; // Position between first & second text
+
+    ctx.beginPath();
+    ctx.moveTo(lineStartX, lineY);
+    ctx.lineTo(lineEndX, lineY);
+    ctx.strokeStyle = '#000'; // Black line
+    ctx.lineWidth = 1.5; // Line thickness
+    ctx.stroke();
+
+    // 🌟 Second Text (Bigger)
     ctx.fillStyle = '#000000';
-    ctx.fillText(`${firstValue.value}`, width / 2 - 15, height / 2);
+    ctx.fillText(firstValue.value, width / 2, height / 2);
 
-    ctx.font = 'bold 10px Arial'; // Smaller "EGP"
-    ctx.fillText('EGP', width / 2 + 40, height / 2);
+    ctx.font = 'bold 10px Arial';
+    ctx.fillStyle = 'blue';
 
-    // 🌟 Third Line (Percentage)
+    ctx.fillText(currency, (width / 2 + firstTextWidth / 2) + 12, (height / 2)*1.02); // Dynamically positioned
+
+    // 🌟 Third Text (Percentage)
     ctx.font = 'bold 22px Arial';
-    ctx.fillStyle = '#02542D';
-        ctx.fillText(percentage.value, width / 2, height / 2 + lineSpacing * 1.5);
+    ctx.fillStyle = 'red';
+    ctx.fillText(percentage.value, width / 2, height / 2 + lineSpacing * 2);
 
     ctx.restore();
   }
 };
+
+
+
 
 
   onMounted(() => {
