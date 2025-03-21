@@ -14,10 +14,20 @@
  
   }" 
 /></div>
+<p class="TargetInfo w-full text-center text-lg mt-4">
+  Will Reach the Target in Last of month if make 
+  <span class="spanInfo font-bold text-xl">40,000</span> 
+<span class="spancuurency inline-flex items-center text-sm text-[#1E1E1E] ml-1 mt-">EGP</span> daily
+</p>
+<h2 class="font-bold mt-6">Total Debt</h2>
+<div class="text-center">
+  <h2 class="font-bold text-2xl md:text-3xl mt-6">400,210</h2>
+  <span class="text-sm text-gray-700 block mt-[-4px] ml-[6rem]">EGP</span>
+</div>
+
 </div>
 </section>
 </template>
-
 <script>
 import { ref } from 'vue';
 import { DoughnutChart } from 'vue-chart-3';
@@ -128,15 +138,18 @@ ctx.fillText(currency, width / 2 + secondTextWidth / 2 + 25, height / 2 - lineSp
 
 </script>
 <style scoped>
+
 .chart-container {
   width: 172px;
-  height: 284px;
 }
 
 @media (min-width: 600px) {
   .chart-container {
     width: 400px; 
     height: 400px;
+  }
+  .TargetInfo {
+    margin-top: 1rem;
   }
 }
 </style>
