@@ -1,5 +1,5 @@
 <template>
-      <section class="hero flow section" data-padding="compact">
+      <section class="hero flow " data-padding="compact">
       <div class="wrapper" id="main">
           <div class="chart-container">
 
@@ -22,7 +22,7 @@
 import { ref } from 'vue';
 import { DoughnutChart } from 'vue-chart-3';
 import { Chart, registerables } from "chart.js";
-import {  onMounted , computed } from 'vue';
+import {  onMounted , computed,watch } from 'vue';
 
 
 Chart.register(...registerables);
@@ -32,9 +32,9 @@ export default {
   components: { DoughnutChart },
   setup() {
         //target /////////////////
-    const firstValue = ref(3000);
+    const firstValue = ref(2000);
     ///////target for employee 
-    const secondValue = ref(100);
+    const secondValue = ref(1000);
     const percentage = computed(() => ((( secondValue.value/firstValue.value ) * 100)).toFixed(1)  + '%');
 
     const testData = ref({
@@ -69,11 +69,11 @@ const centerTextPlugin = {
     ctx.fillStyle = '#02542D';
     ctx.fillText(secondValue.value, width / 2, height / 2 - lineSpacing * 1.5);
 
-    ctx.font = 'bold 10px Arial';
+    ctx.font = ' 10px Arial';
     const currencyWidth = ctx.measureText(currency).width;
     const secondTextWidth = ctx.measureText(secondValue.value).width;
     
-ctx.fillText(currency, width / 2 + secondTextWidth / 2 + 22, height / 2 - lineSpacing * 1.2);
+ctx.fillText(currency, width / 2 + secondTextWidth / 2 + 25, height / 2 - lineSpacing * 1.2);
 
 
     // ✨ Measure First Text Width
@@ -89,7 +89,7 @@ ctx.fillText(currency, width / 2 + secondTextWidth / 2 + 22, height / 2 - lineSp
     ctx.beginPath();
     ctx.moveTo(lineStartX, lineY);
     ctx.lineTo(lineEndX, lineY);
-    ctx.strokeStyle = '#000'; // Black line
+    ctx.strokeStyle = '#D9D9D9'; 
     ctx.lineWidth = 1.5; // Line thickness
     ctx.stroke();
 
@@ -97,8 +97,8 @@ ctx.fillText(currency, width / 2 + secondTextWidth / 2 + 22, height / 2 - lineSp
     ctx.fillStyle = '#000000';
     ctx.fillText(firstValue.value, width / 2, height / 2);
 
-    ctx.font = 'bold 10px Arial';
-    ctx.fillStyle = 'blue';
+    ctx.font = '10px Arial';
+    ctx.fillStyle = 'black';
 
     ctx.fillText(currency, (width / 2 + firstTextWidth / 2) + 12, (height / 2)*1.02); // Dynamically positioned
 
@@ -112,7 +112,10 @@ ctx.fillText(currency, width / 2 + secondTextWidth / 2 + 22, height / 2 - lineSp
 };
 
 
-
+  watch([firstValue, secondValue], () => {
+      testData.value.datasets[0].data = [secondValue.value, firstValue.value - secondValue.value];
+      Chart.register(centerTextPlugin); // Register the updated plugin
+    });
 
 
   onMounted(() => {
@@ -127,7 +130,7 @@ ctx.fillText(currency, width / 2 + secondTextWidth / 2 + 22, height / 2 - lineSp
 <style scoped>
 .chart-container {
   width: 172px;
-  height: 172px;
+  height: 284px;
 }
 
 @media (min-width: 600px) {

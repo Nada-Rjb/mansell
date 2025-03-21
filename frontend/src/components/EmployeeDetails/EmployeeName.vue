@@ -1,11 +1,11 @@
 <template>
     <section class="hero flow section" data-padding="compact">
-      <div class="wrapper" id="main">
+      <div id="main">
          <div class="employeename">
         <img src="../../assets/imges/GenericAvatar.svg"/>
-        <div><h2> استاذ / طارق المغربى  </h2></div>
+        <h2> استاذ / طارق المغربى  </h2>
     </div>
-
+<hr>
     <h2 class="target">تارجت</h2>
 
       </div>
@@ -18,18 +18,19 @@ section {
 .employeename {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     font-size: 1.5rem;
     gap: 3rem;
     padding-bottom: 1rem;
-    border-bottom: 2px  #D9D9D9 solid;
     font-weight: bold;
+    margin-right: 2rem;
+    
 }
 
 @media (max-width: 768px) {
     .employeename {
     font-size: 1rem;
-        gap: 0.5rem;
+        gap: 1rem;
     }
 }
 .target {
